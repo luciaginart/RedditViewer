@@ -9,14 +9,18 @@
 import UIKit
 
 class MasterViewController: UITableViewController {
-
     var detailViewController: DetailViewController? = nil
+    var model: [RedditPost] = []
+    lazy var activityIndicatorView: UIActivityIndicatorView = {
+        return UIActivityIndicatorView(style: .gray)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        configureDetailViewController()
+        if model.isEmpty {
+            tableView.backgroundView = activityIndicatorView
+            fetchPosts()
         }
     }
 
@@ -26,18 +30,41 @@ class MasterViewController: UITableViewController {
             clearsSelectionOnViewWillAppear = splitViewController.isCollapsed
         }
     }
+}
 
-    // MARK: - Segues
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
+// MARK: - Service Caller
+extension MasterViewController {
+    fileprivate func fetchPosts(after name: String? = nil) {
+        if model.isEmpty {
+            activityIndicatorView.startAnimating()
+        }
+        
+        RedditAPIService.fetchPost(after: name) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.activityIndicatorView.stopAnimating()
+            }
+            
+            switch result {
+            case .success(let success):
+                self.model.rv_safeAppend(array: success.posts)
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadData()
+                }
+
+            case .failure(let error):
+                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
 }
+
 
 // MARK: - Table View
 extension MasterViewController {
@@ -46,13 +73,39 @@ extension MasterViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return model.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         return cell
+    }
+}
+
+// MARK: SplitViewController
+extension MasterViewController {
+    fileprivate func configureDetailViewController() {
+        guard let split = splitViewController else {
+            return
+        }
+        
+        let controllers = split.viewControllers
+        detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+    }
+}
+
+// MARK: - Segues
+extension MasterViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+                controller.model = model[indexPath.row]
+                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
     }
 }
 

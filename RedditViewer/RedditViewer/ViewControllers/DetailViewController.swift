@@ -10,10 +10,22 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var detailDescriptionLabel: UILabel! //FIXME: (Lucy) borrar
+
+    var model: RedditPost? {
+        didSet {
+            configureView()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
     }
+
+    func configureView() {
+        //FIXME: (Lucy) implementar
+    }
+
 }
 

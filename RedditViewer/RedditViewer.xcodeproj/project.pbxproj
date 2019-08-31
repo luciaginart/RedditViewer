@@ -13,6 +13,10 @@
 		6B9660FD231AA881006E33D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B9660FB231AA881006E33D0 /* Main.storyboard */; };
 		6B9660FF231AA883006E33D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B9660FE231AA883006E33D0 /* Assets.xcassets */; };
 		6B966102231AA883006E33D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B966100231AA883006E33D0 /* LaunchScreen.storyboard */; };
+		6B966111231AAB91006E33D0 /* RedditAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966110231AAB91006E33D0 /* RedditAPIService.swift */; };
+		6B966113231AABD0006E33D0 /* RedditPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966112231AABD0006E33D0 /* RedditPost.swift */; };
+		6B966116231AAF5B006E33D0 /* RedditData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966115231AAF5A006E33D0 /* RedditData.swift */; };
+		6B966118231AB2A1006E33D0 /* Array+SafeAppend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966117231AB2A1006E33D0 /* Array+SafeAppend.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		6B9660FE231AA883006E33D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B966101231AA883006E33D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B966103231AA883006E33D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B966110231AAB91006E33D0 /* RedditAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditAPIService.swift; sourceTree = "<group>"; };
+		6B966112231AABD0006E33D0 /* RedditPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditPost.swift; sourceTree = "<group>"; };
+		6B966115231AAF5A006E33D0 /* RedditData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditData.swift; sourceTree = "<group>"; };
+		6B966117231AB2A1006E33D0 /* Array+SafeAppend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SafeAppend.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,7 @@
 		6B9660F4231AA881006E33D0 /* RedditViewer */ = {
 			isa = PBXGroup;
 			children = (
+				6B966114231AACDC006E33D0 /* Exntensions */,
 				6B96610F231AAA32006E33D0 /*  Cells */,
 				6B96610A231AA9BA006E33D0 /* Service */,
 				6B966109231AA9B3006E33D0 /* Model */,
@@ -71,6 +80,8 @@
 		6B966109231AA9B3006E33D0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6B966115231AAF5A006E33D0 /* RedditData.swift */,
+				6B966112231AABD0006E33D0 /* RedditPost.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -78,6 +89,7 @@
 		6B96610A231AA9BA006E33D0 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				6B966110231AAB91006E33D0 /* RedditAPIService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -113,6 +125,14 @@
 			children = (
 			);
 			path = " Cells";
+			sourceTree = "<group>";
+		};
+		6B966114231AACDC006E33D0 /* Exntensions */ = {
+			isa = PBXGroup;
+			children = (
+				6B966117231AB2A1006E33D0 /* Array+SafeAppend.swift */,
+			);
+			path = Exntensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,7 +206,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B966113231AABD0006E33D0 /* RedditPost.swift in Sources */,
+				6B966118231AB2A1006E33D0 /* Array+SafeAppend.swift in Sources */,
+				6B966111231AAB91006E33D0 /* RedditAPIService.swift in Sources */,
 				6B9660FA231AA881006E33D0 /* DetailViewController.swift in Sources */,
+				6B966116231AAF5B006E33D0 /* RedditData.swift in Sources */,
 				6B9660F8231AA881006E33D0 /* MasterViewController.swift in Sources */,
 				6B9660F6231AA881006E33D0 /* AppDelegate.swift in Sources */,
 			);
