@@ -20,6 +20,9 @@ class MasterViewController: UITableViewController {
         super.viewDidLoad()
         configureDetailViewController()
         configureRefreshControl()
+        configureNotification()
+        loadSavedModel()
+        
         if model.isEmpty {
             tableView.backgroundView = activityIndicatorView
             fetchPosts()
@@ -34,13 +37,29 @@ class MasterViewController: UITableViewController {
     }
 }
 
-// MARK: - Service Caller
+// MARK: User defaults
+extension MasterViewController {
+    fileprivate func configureNotification() {
+        NotificationCenter.default.addObserver(self, selector:#selector(saveModel), name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
+    fileprivate func loadSavedModel() {
+        model.rv_load()
+    }
+    
+    @objc fileprivate func saveModel() {
+        model.rv_save()
+    }
+}
+
+// MARK: Service Caller
 extension MasterViewController {
     fileprivate func fetchPosts(after name: String? = nil, refresh: Bool = false) {
         if model.isEmpty, !refresh {
+            view.isUserInteractionEnabled = false
             activityIndicatorView.startAnimating()
         }
-        
+
         RedditAPIService.fetchPost(after: name) { [weak self] result in
             guard let self = self else {
                 return
@@ -54,6 +73,7 @@ extension MasterViewController {
                 self.tableView.refreshControl?.endRefreshing()
                 
                 if self.model.isEmpty {
+                    self.view.isUserInteractionEnabled = true
                     self.activityIndicatorView.stopAnimating()
                 }
             }

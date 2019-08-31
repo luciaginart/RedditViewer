@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum RedditPostStatus {
+enum RedditPostStatus: String, Codable {
     case read
     case unread
 }
 
-struct RedditPost: Decodable {
+struct RedditPost: Codable {
     let name: String
     let author: String
     let title: String
@@ -30,6 +30,7 @@ struct RedditPost: Decodable {
         case comments = "num_comments"
         case entryDate = "created"
         case data
+        case status
     }
     
     init(from decoder: Decoder) throws {
@@ -42,6 +43,27 @@ struct RedditPost: Decodable {
         entryDate = try dataContainer.decode(TimeInterval.self, forKey: .entryDate)
         thumbnail = try dataContainer.decodeIfPresent(String.self, forKey: .thumbnail)
         comments = try dataContainer.decodeIfPresent(Int.self, forKey: .comments)
-        status = .unread
+        
+        if let statusRawValue = try dataContainer.decodeIfPresent(String.self, forKey: .status) {
+            status = RedditPostStatus(rawValue: statusRawValue) ?? .unread
+        } else {
+           status = .unread
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        var dataContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
+        
+        try dataContainer.encode(name, forKey: .name)
+        try dataContainer.encode(author, forKey: .author)
+        try dataContainer.encode(title, forKey: .title)
+        try dataContainer.encode(entryDate, forKey: .entryDate)
+        try dataContainer.encode(thumbnail, forKey: .thumbnail)
+        try dataContainer.encode(thumbnail, forKey: .thumbnail)
+        try dataContainer.encode(comments, forKey: .comments)
+        try dataContainer.encode(status.rawValue, forKey: .status)
+        
+        
     }
 }
