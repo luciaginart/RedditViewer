@@ -18,6 +18,7 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDetailViewController()
+        configureRefreshControl()
         if model.isEmpty {
             tableView.backgroundView = activityIndicatorView
             fetchPosts()
@@ -34,7 +35,7 @@ class MasterViewController: UITableViewController {
 
 // MARK: - Service Caller
 extension MasterViewController {
-    fileprivate func fetchPosts(after name: String? = nil) {
+    fileprivate func fetchPosts(after name: String? = nil, refresh: Bool = false) {
         if model.isEmpty {
             activityIndicatorView.startAnimating()
         }
@@ -45,12 +46,21 @@ extension MasterViewController {
             }
             
             DispatchQueue.main.async { [weak self] in
-                self?.activityIndicatorView.stopAnimating()
+                guard let self = self else {
+                    return
+                }
+                
+                self.tableView.refreshControl?.endRefreshing()
+                self.activityIndicatorView.stopAnimating()
             }
             
             switch result {
             case .success(let success):
-                self.model.rv_safeAppend(array: success.posts)
+                if refresh {
+                    self.model = success.posts
+                } else {
+                    self.model.rv_safeAppend(array: success.posts)
+                }
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.tableView.reloadData()
@@ -65,6 +75,19 @@ extension MasterViewController {
     }
 }
 
+// MARK: Pull To Refresh
+extension MasterViewController {
+    fileprivate func configureRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
+        
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func refreshAction() {
+        fetchPosts(refresh: true)
+    }
+}
 
 // MARK: - Table View
 extension MasterViewController {
