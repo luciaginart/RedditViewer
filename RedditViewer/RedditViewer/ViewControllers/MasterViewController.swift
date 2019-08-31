@@ -19,6 +19,7 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDetailViewController()
+        registerCells()
         configureRefreshControl()
         configureNotification()
         loadSavedModel()
@@ -140,6 +141,11 @@ extension MasterViewController {
 
 // MARK: - Table View
 extension MasterViewController {
+    fileprivate func registerCells() {
+        tableView.register(RedditLoadingTableViewCell.rv_loadNib(), forCellReuseIdentifier: "loading.identifier")
+        tableView.register(RedditPostTableViewCell.rv_loadNib(), forCellReuseIdentifier: "reddit.post")
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         guard !model.isEmpty else {
             return 0
@@ -153,14 +159,40 @@ extension MasterViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
-        //FIXME: (Lucy) implementar celdas
         if isLoadingCell(indexPath: indexPath) {
-            cell.backgroundColor = .red
+            let cell = tableView.dequeueReusableCell(withIdentifier: "loading.identifier", for: indexPath)
             return cell
         } else {
-            cell.backgroundColor = .white
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "reddit.post", for: indexPath) as? RedditPostTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            cell.model = model[indexPath.row]
+            cell.dismissActionClosure = { [weak self] cellModel in
+                guard let self = self else {
+                    return
+                }
+                
+                guard let index = self.model.firstIndex(where: { (post) -> Bool in
+                    guard let cellModel = cellModel else {
+                        return false
+                    }
+                    
+                    return cellModel.name == post.name
+                }) else {
+                    return
+                }
+                
+                self.tableView.beginUpdates()
+                
+                self.model.remove(at: index)
+                
+                let indexPath = IndexPath(row: index, section: 0)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+                self.tableView.endUpdates()
+            }
+            
             return cell
         }
     }

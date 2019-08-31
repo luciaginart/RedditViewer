@@ -17,6 +17,14 @@
 		6B966113231AABD0006E33D0 /* RedditPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966112231AABD0006E33D0 /* RedditPost.swift */; };
 		6B966116231AAF5B006E33D0 /* RedditData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966115231AAF5A006E33D0 /* RedditData.swift */; };
 		6B966118231AB2A1006E33D0 /* Array+SafeAppend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966117231AB2A1006E33D0 /* Array+SafeAppend.swift */; };
+		6B96611A231AE670006E33D0 /* Array+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966119231AE670006E33D0 /* Array+UserDefaults.swift */; };
+		6B96611D231AFA21006E33D0 /* RedditPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B96611B231AFA21006E33D0 /* RedditPostTableViewCell.swift */; };
+		6B96611E231AFA21006E33D0 /* RedditPostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B96611C231AFA21006E33D0 /* RedditPostTableViewCell.xib */; };
+		6B966121231AFA35006E33D0 /* RedditLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B96611F231AFA35006E33D0 /* RedditLoadingTableViewCell.swift */; };
+		6B966122231AFA35006E33D0 /* RedditLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B966120231AFA35006E33D0 /* RedditLoadingTableViewCell.xib */; };
+		6B966124231AFAC7006E33D0 /* UIView+Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966123231AFAC7006E33D0 /* UIView+Load.swift */; };
+		6B966126231AFFE3006E33D0 /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966125231AFFE3006E33D0 /* Date+Formatter.swift */; };
+		6B966128231B00AF006E33D0 /* UIImageView+Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B966127231B00AF006E33D0 /* UIImageView+Downloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +40,14 @@
 		6B966112231AABD0006E33D0 /* RedditPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditPost.swift; sourceTree = "<group>"; };
 		6B966115231AAF5A006E33D0 /* RedditData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditData.swift; sourceTree = "<group>"; };
 		6B966117231AB2A1006E33D0 /* Array+SafeAppend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SafeAppend.swift"; sourceTree = "<group>"; };
+		6B966119231AE670006E33D0 /* Array+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+UserDefaults.swift"; sourceTree = "<group>"; };
+		6B96611B231AFA21006E33D0 /* RedditPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditPostTableViewCell.swift; sourceTree = "<group>"; };
+		6B96611C231AFA21006E33D0 /* RedditPostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RedditPostTableViewCell.xib; sourceTree = "<group>"; };
+		6B96611F231AFA35006E33D0 /* RedditLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditLoadingTableViewCell.swift; sourceTree = "<group>"; };
+		6B966120231AFA35006E33D0 /* RedditLoadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RedditLoadingTableViewCell.xib; sourceTree = "<group>"; };
+		6B966123231AFAC7006E33D0 /* UIView+Load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Load.swift"; sourceTree = "<group>"; };
+		6B966125231AFFE3006E33D0 /* Date+Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatter.swift"; sourceTree = "<group>"; };
+		6B966127231B00AF006E33D0 /* UIImageView+Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloader.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +139,10 @@
 		6B96610F231AAA32006E33D0 /*  Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6B96611B231AFA21006E33D0 /* RedditPostTableViewCell.swift */,
+				6B96611C231AFA21006E33D0 /* RedditPostTableViewCell.xib */,
+				6B96611F231AFA35006E33D0 /* RedditLoadingTableViewCell.swift */,
+				6B966120231AFA35006E33D0 /* RedditLoadingTableViewCell.xib */,
 			);
 			path = " Cells";
 			sourceTree = "<group>";
@@ -131,6 +151,10 @@
 			isa = PBXGroup;
 			children = (
 				6B966117231AB2A1006E33D0 /* Array+SafeAppend.swift */,
+				6B966119231AE670006E33D0 /* Array+UserDefaults.swift */,
+				6B966123231AFAC7006E33D0 /* UIView+Load.swift */,
+				6B966125231AFFE3006E33D0 /* Date+Formatter.swift */,
+				6B966127231B00AF006E33D0 /* UIImageView+Downloader.swift */,
 			);
 			path = Exntensions;
 			sourceTree = "<group>";
@@ -194,6 +218,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B966102231AA883006E33D0 /* LaunchScreen.storyboard in Resources */,
+				6B966122231AFA35006E33D0 /* RedditLoadingTableViewCell.xib in Resources */,
+				6B96611E231AFA21006E33D0 /* RedditPostTableViewCell.xib in Resources */,
 				6B9660FF231AA883006E33D0 /* Assets.xcassets in Resources */,
 				6B9660FD231AA881006E33D0 /* Main.storyboard in Resources */,
 			);
@@ -208,10 +234,16 @@
 			files = (
 				6B966113231AABD0006E33D0 /* RedditPost.swift in Sources */,
 				6B966118231AB2A1006E33D0 /* Array+SafeAppend.swift in Sources */,
+				6B966121231AFA35006E33D0 /* RedditLoadingTableViewCell.swift in Sources */,
 				6B966111231AAB91006E33D0 /* RedditAPIService.swift in Sources */,
+				6B966126231AFFE3006E33D0 /* Date+Formatter.swift in Sources */,
+				6B966128231B00AF006E33D0 /* UIImageView+Downloader.swift in Sources */,
 				6B9660FA231AA881006E33D0 /* DetailViewController.swift in Sources */,
+				6B96611A231AE670006E33D0 /* Array+UserDefaults.swift in Sources */,
+				6B966124231AFAC7006E33D0 /* UIView+Load.swift in Sources */,
 				6B966116231AAF5B006E33D0 /* RedditData.swift in Sources */,
 				6B9660F8231AA881006E33D0 /* MasterViewController.swift in Sources */,
+				6B96611D231AFA21006E33D0 /* RedditPostTableViewCell.swift in Sources */,
 				6B9660F6231AA881006E33D0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
