@@ -27,7 +27,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEb-Ai-3Jp">
                                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="9Ym-Vh-JuW"/>
                                             <constraint firstAttribute="width" constant="16" id="aIO-Qi-hIA"/>
@@ -51,14 +51,14 @@
                                 <rect key="frame" x="0.0" y="32" width="230" height="60"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FLs-NS-9yD">
-                                        <rect key="frame" x="0.0" y="0.0" width="111" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="750" constant="60" id="gJS-Re-3FK"/>
-                                            <constraint firstAttribute="width" priority="750" constant="60" id="sc5-I8-JH6"/>
+                                            <constraint firstAttribute="width" constant="60" id="sc5-I8-JH6"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIF-Tm-ajW">
-                                        <rect key="frame" x="119" y="0.0" width="111" height="60"/>
+                                        <rect key="frame" x="68" y="0.0" width="162" height="60"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>

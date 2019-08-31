@@ -26,6 +26,12 @@ class RedditPostTableViewCell: UITableViewCell {
             configureView()
         }
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        readStatusView.layer.cornerRadius = readStatusView.frame.size.width/2
+        readStatusView.clipsToBounds = true
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

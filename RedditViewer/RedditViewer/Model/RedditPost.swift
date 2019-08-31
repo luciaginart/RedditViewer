@@ -20,7 +20,7 @@ struct RedditPost: Codable {
     let thumbnail: String?
     let comments: Int?
     let entryDate: TimeInterval
-    let status: RedditPostStatus
+    var status: RedditPostStatus
     
     enum CodingKeys: String, CodingKey {
         case name

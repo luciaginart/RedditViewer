@@ -10,11 +10,15 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel! //FIXME: (Lucy) borrar
+    @IBOutlet weak var postImage: UIImageView!
+    @IBOutlet weak var descriptionLabel: UILabel!
 
     var model: RedditPost? {
         didSet {
-            configureView()
+            if isViewLoaded {
+                configureView()
+            }
+            
         }
     }
 
@@ -24,8 +28,21 @@ class DetailViewController: UIViewController {
     }
 
     func configureView() {
-        //FIXME: (Lucy) implementar
+        guard isViewLoaded else {
+            return
+        }
+        
+        if let url = model?.thumbnail {
+            postImage.downloaded(from: url)
+        } else {
+            postImage.isHidden = true
+        }
+        
+        descriptionLabel.text = model?.title
     }
 
+    @IBAction func saveAction(_ sender: Any) {
+        //FIXME (Lucy) save to library
+    }
 }
 

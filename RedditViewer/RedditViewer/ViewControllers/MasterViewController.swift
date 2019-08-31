@@ -56,7 +56,7 @@ extension MasterViewController {
 // MARK: Service Caller
 extension MasterViewController {
     fileprivate func fetchPosts(after name: String? = nil, refresh: Bool = false) {
-        if model.isEmpty, !refresh {
+        if !refresh {
             view.isUserInteractionEnabled = false
             activityIndicatorView.startAnimating()
         }
@@ -71,12 +71,12 @@ extension MasterViewController {
                     return
                 }
                 
-                self.tableView.refreshControl?.endRefreshing()
-                
-                if self.model.isEmpty {
+                if !refresh {
                     self.view.isUserInteractionEnabled = true
                     self.activityIndicatorView.stopAnimating()
                 }
+                
+                self.tableView.refreshControl?.endRefreshing()
             }
             
             switch result {
@@ -121,6 +121,10 @@ extension MasterViewController {
 // MARK: - Footer view
 extension MasterViewController {
     fileprivate func createFooterView() -> UIView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        
         let deleteButton = UIButton(type: .custom)
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.addTarget(self, action: #selector(deleteAllAction), for: .touchUpInside)
@@ -128,7 +132,9 @@ extension MasterViewController {
         deleteButton.setTitleColor(.orange, for: .normal)
         deleteButton.backgroundColor = .black
         
-        return deleteButton
+        stackView.addArrangedSubview(deleteButton)
+        
+        return stackView
     }
     
     @objc func deleteAllAction() {
@@ -221,6 +227,10 @@ extension MasterViewController {
         fetchPosts(after: model[indexPath.count - 1].name)
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showDetail", sender: nil)
+    }
+    
     fileprivate func isLoadingCell(indexPath: IndexPath) -> Bool {
         guard showPagingCell else {
             return false
@@ -247,9 +257,14 @@ extension MasterViewController {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.model = model[indexPath.row]
+                var selectedModel = model[indexPath.row]
+                
+                controller.model = selectedModel
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
+                
+                selectedModel.status = .read
+                model[indexPath.row] = selectedModel
             }
         }
     }
