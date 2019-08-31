@@ -9,9 +9,10 @@
 import UIKit
 
 class MasterViewController: UITableViewController {
-    var detailViewController: DetailViewController? = nil
-    var model: [RedditPost] = []
-    lazy var activityIndicatorView: UIActivityIndicatorView = {
+    private var detailViewController: DetailViewController? = nil
+    private var showPagingCell = true
+    private var model: [RedditPost] = []
+    lazy private var activityIndicatorView: UIActivityIndicatorView = {
         return UIActivityIndicatorView(style: .gray)
     }()
 
@@ -51,7 +52,10 @@ extension MasterViewController {
                 }
                 
                 self.tableView.refreshControl?.endRefreshing()
-                self.activityIndicatorView.stopAnimating()
+                
+                if self.model.isEmpty {
+                    self.activityIndicatorView.stopAnimating()
+                }
             }
             
             switch result {
@@ -73,6 +77,8 @@ extension MasterViewController {
                     self?.present(alert, animated: true, completion: nil)
                 }
             }
+            
+            self.showPagingCell = self.model.count < 50
         }
     }
 }
@@ -98,7 +104,7 @@ extension MasterViewController {
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.addTarget(self, action: #selector(deleteAllAction), for: .touchUpInside)
         deleteButton.setTitle("Dismiss All", for: .normal)
-        deleteButton.titleLabel?.textColor = .red
+        deleteButton.setTitleColor(.orange, for: .normal)
         deleteButton.backgroundColor = .black
         
         return deleteButton
@@ -123,13 +129,20 @@ extension MasterViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.count
+        return showPagingCell ? model.count + 1 : model.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-        return cell
+        
+        //FIXME: (Lucy) implementar celdas
+        if isLoadingCell(indexPath: indexPath) {
+            cell.backgroundColor = .red
+            return cell
+        } else {
+            cell.backgroundColor = .white
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -146,6 +159,21 @@ extension MasterViewController {
         }
         
         return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard isLoadingCell(indexPath: indexPath) else {
+            return
+        }
+        
+        fetchPosts(after: model[indexPath.count - 1].name)
+    }
+    
+    fileprivate func isLoadingCell(indexPath: IndexPath) -> Bool {
+        guard showPagingCell else {
+            return false
+        }
+        return indexPath.row == model.count
     }
 }
 
