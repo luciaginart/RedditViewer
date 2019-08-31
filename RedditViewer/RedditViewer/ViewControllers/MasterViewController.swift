@@ -36,7 +36,7 @@ class MasterViewController: UITableViewController {
 // MARK: - Service Caller
 extension MasterViewController {
     fileprivate func fetchPosts(after name: String? = nil, refresh: Bool = false) {
-        if model.isEmpty {
+        if model.isEmpty, !refresh {
             activityIndicatorView.startAnimating()
         }
         
@@ -67,9 +67,11 @@ extension MasterViewController {
                 }
 
             case .failure(let error):
-                let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                DispatchQueue.main.async { [weak self] in
+                    let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -89,9 +91,34 @@ extension MasterViewController {
     }
 }
 
+// MARK: - Footer view
+extension MasterViewController {
+    fileprivate func createFooterView() -> UIView {
+        let deleteButton = UIButton(type: .custom)
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        deleteButton.addTarget(self, action: #selector(deleteAllAction), for: .touchUpInside)
+        deleteButton.setTitle("Dismiss All", for: .normal)
+        deleteButton.titleLabel?.textColor = .red
+        deleteButton.backgroundColor = .black
+        
+        return deleteButton
+    }
+    
+    @objc func deleteAllAction() {
+        tableView.beginUpdates()
+        model.removeAll()
+        tableView.deleteSections(IndexSet(integer: 0), with: .left)
+        tableView.endUpdates()
+    }
+}
+
 // MARK: - Table View
 extension MasterViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
+        guard !model.isEmpty else {
+            return 0
+        }
+        
         return 1
     }
     
@@ -103,6 +130,22 @@ extension MasterViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard !model.isEmpty else {
+            return nil
+        }
+        
+        return createFooterView()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard !model.isEmpty else {
+            return 0
+        }
+        
+        return UITableView.automaticDimension
     }
 }
 
